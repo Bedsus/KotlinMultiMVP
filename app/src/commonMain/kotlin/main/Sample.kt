@@ -1,4 +1,4 @@
-package sample
+package main
 
 expect class Sample() {
     fun checkMe(): Int
