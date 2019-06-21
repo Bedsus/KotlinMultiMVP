@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import main.data.PokemonEntry
 
-class MyAdapter(private val myDataSet: List<PokemonEntry>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class PokemonAdapter(private val myDataSet: List<PokemonEntry>) : RecyclerView.Adapter<PokemonAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder =
          MyViewHolder(LayoutInflater.from(parent.context)

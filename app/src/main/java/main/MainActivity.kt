@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showPokemonList(pokemons: List<PokemonEntry>) {
-        recyclerView.adapter = MyAdapter(pokemons)
+        recyclerView.adapter = PokemonAdapter(pokemons)
     }
 }
-
-actual fun getPlatformName() = "Android"
