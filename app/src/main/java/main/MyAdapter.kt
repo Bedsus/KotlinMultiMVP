@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import main.data.PokemonEntry
 
 class MyAdapter(private val myDataSet: List<PokemonEntry>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
@@ -16,9 +17,13 @@ class MyAdapter(private val myDataSet: List<PokemonEntry>) : RecyclerView.Adapte
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.textView.text = myDataSet[position].label
+        val pokemon = myDataSet[position]
+        holder.textView.text = pokemon.label
+        holder.number.text = pokemon.number
         Picasso.get()
-            .load("http://pngimg.com/uploads/pokemon/pokemon_PNG156.png")
+            .load(pokemon.urlImage)
+            .centerCrop()
+            .resize(300, 300)
             .into(holder.imageView)
     }
 
@@ -26,6 +31,7 @@ class MyAdapter(private val myDataSet: List<PokemonEntry>) : RecyclerView.Adapte
 
     inner class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.textView)
+        val number: TextView = view.findViewById(R.id.number)
         val imageView: ImageView = view.findViewById(R.id.imageView)
     }
 }

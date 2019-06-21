@@ -6,6 +6,7 @@ class MainPresenterImpl(view: MainView, model: MainModelImpl) : MainPresenter {
             success = { view.showPokemonList(it) },
             failure = { view.showError() }
         )
+        view.showPlatformName("${getPlatformName()} Pokemon List")
     }
 }
 

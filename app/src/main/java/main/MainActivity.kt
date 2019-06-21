@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
+import main.data.PokemonEntry
 
 class MainActivity : AppCompatActivity(), MainView {
 
@@ -18,14 +19,14 @@ class MainActivity : AppCompatActivity(), MainView {
         setContentView(R.layout.activity_main)
         viewManager = LinearLayoutManager(this)
         recyclerView = findViewById<RecyclerView>(R.id.recycler_view_list).apply {
-            setHasFixedSize(true)// in content do not change the layout size of the RecyclerView
+            setHasFixedSize(true)
             layoutManager = viewManager
         }
         presenter = MainPresenterImpl(this, MainModelImpl())
     }
 
     override fun showPlatformName(name: String) {
-        // mainText.text = name
+        title = name
     }
 
     override fun showError() {

@@ -1,5 +1,7 @@
 package main
 
+import main.data.PokemonEntry
+
 class MainModelImpl : MainModel {
 
     private val apiClient = ApiClient()

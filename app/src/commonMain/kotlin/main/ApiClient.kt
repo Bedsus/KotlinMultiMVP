@@ -6,12 +6,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import main.data.Pokedex
+import main.data.PokemonEntry
 
 class ApiClient {
     private val httpClient = HttpClient()
-    private val url = "https://pokeapi.co/api/v2/pokedex/kanto/"
 
     fun getPokemonList(success: (List<PokemonEntry>) -> Unit, failure: (Throwable?) -> Unit) {
+        val url = "https://pokeapi.co/api/v2/pokedex/kanto/"
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 Json.nonstrict.parse(Pokedex.serializer(), httpClient.get(url))

@@ -1,4 +1,4 @@
-package main
+package main.data
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -7,14 +7,15 @@ import kotlinx.serialization.Transient
 data class Pokedex(val pokemon_entries: List<PokemonEntry>)
 
 @Serializable
-data class PokemonEntry(val entry_number: Int, val pokemon_species: Pokemon) {
+data class PokemonEntry(private val entry_number: Int, private val pokemon_species: Pokemon) {
     @Transient
-    val label: String
-        get() {
-            val name = pokemon_species.name.toUpperCase()
-            return "N°$entry_number\t\t$name"
-        }
+    val label = pokemon_species.name.toUpperCase()
 
+    @Transient
+    val number = entry_number.toString().padStart(3, '0')
+
+    @Transient
+    val urlImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$entry_number.png"
 }
 
 
