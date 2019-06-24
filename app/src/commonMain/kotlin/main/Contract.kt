@@ -5,7 +5,7 @@ import main.data.PokemonEntry
 interface MainView {
     fun showPlatformName(name: String)
     fun showPokemonList(pokemons: List<PokemonEntry>)
-    fun showError()
+    fun handleError(ex: Throwable?)
 }
 
 interface MainPresenter

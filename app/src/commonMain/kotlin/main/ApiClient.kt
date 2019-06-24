@@ -2,6 +2,7 @@ package main
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -13,10 +14,12 @@ class ApiClient {
     private val httpClient = HttpClient()
 
     fun getPokemonList(success: (List<PokemonEntry>) -> Unit, failure: (Throwable?) -> Unit) {
-        val url = "https://pokeapi.co/api/v2/pokedex/kanto/"
+
         GlobalScope.launch(Dispatchers.Main) {
             try {
-                Json.nonstrict.parse(Pokedex.serializer(), httpClient.get(url))
+                val url = "https://pokeapi.co/api/v2/pokedex/kanto/"
+                val json = httpClient.get<String>(url)
+                Json.nonstrict.parse(Pokedex.serializer(), json)
                     .pokemon_entries
                     .also(success)
             } catch (ex: Exception) {
@@ -26,3 +29,5 @@ class ApiClient {
     }
 
 }
+
+internal expect val ApplicationDispatcher: CoroutineDispatcher
