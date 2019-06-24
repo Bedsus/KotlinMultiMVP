@@ -15,7 +15,7 @@ class ApiClient {
 
     fun getPokemonList(success: (List<PokemonEntry>) -> Unit, failure: (Throwable?) -> Unit) {
 
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(ApplicationDispatcher) {
             try {
                 val url = "https://pokeapi.co/api/v2/pokedex/kanto/"
                 val json = httpClient.get<String>(url)

@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 
 actual fun getPlatformName() = "iOS"
 
+//TODO Прикрутить platform SDK !!!
 internal actual val ApplicationDispatcher = Dispatchers.Default
  /*   NsQueueDispatcher(dispatch_get_main_queue())
 

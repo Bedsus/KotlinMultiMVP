@@ -8,7 +8,9 @@ interface MainView {
     fun handleError(ex: Throwable?)
 }
 
-interface MainPresenter
+interface MainPresenter {
+    fun detachView()
+}
 
 interface MainModel {
     fun getPokemonList(success: (List<PokemonEntry>) -> Unit, failure: (Throwable?) -> Unit)
