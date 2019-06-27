@@ -1,17 +1,15 @@
 package main
 
+import main.data.Pokedex
 import main.data.PokemonEntry
 
-interface MainView {
+interface MainView : BaseView {
     fun showPlatformName(name: String)
     fun showPokemonList(pokemons: List<PokemonEntry>)
-    fun handleError(ex: Throwable?)
 }
 
-interface MainPresenter {
-    fun detachView()
-}
+interface MainPresenter: BasePresenter
 
 interface MainModel {
-    fun getPokemonList(success: (List<PokemonEntry>) -> Unit, failure: (Throwable?) -> Unit)
+    suspend fun getPokemonList(): Pokedex
 }

@@ -1,33 +1,46 @@
 package main
 
 import io.ktor.client.HttpClient
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import io.ktor.client.request.header
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.http.contentType
+import io.ktor.http.takeFrom
 import kotlinx.serialization.json.Json
 import main.data.Pokedex
-import main.data.PokemonEntry
+
 
 class ApiClient {
-    private val httpClient = HttpClient()
 
-    fun getPokemonList(success: (List<PokemonEntry>) -> Unit, failure: (Throwable?) -> Unit) {
-
-        GlobalScope.launch(ApplicationDispatcher) {
-            try {
-                val url = "https://pokeapi.co/api/v2/pokedex/kanto/"
-                val json = httpClient.get<String>(url)
-                Json.nonstrict.parse(Pokedex.serializer(), json)
-                    .pokemon_entries
-                    .also(success)
-            } catch (ex: Exception) {
-                failure(ex)
+    private val client = HttpClient {
+        install(JsonFeature) {
+            serializer = KotlinxSerializer(Json.nonstrict).apply {
+                setMapper(Pokedex::class, Pokedex.serializer())
             }
         }
     }
 
-}
+    private fun HttpRequestBuilder.json() {
+        contentType(ContentType.Application.Json)
+    }
 
-internal expect val ApplicationDispatcher: CoroutineDispatcher
+    private fun HttpRequestBuilder.apiUrl(url: String, path: String) {
+        header(HttpHeaders.CacheControl, "no-cache")
+        url {
+            takeFrom(url)
+            encodedPath = path
+        }
+    }
+
+    /**
+     * Url нужно прописывать основной, иначе все падает
+     */
+    suspend fun getPokemonList(): Pokedex = client.get {
+        val url = "https://pokeapi.co"
+        apiUrl(url, "api/v2/pokedex/kanto/")
+    }
+}

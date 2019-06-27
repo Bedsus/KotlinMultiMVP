@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
+import kotlinx.coroutines.Dispatchers
 import main.data.PokemonEntry
 
 class MainActivity : AppCompatActivity(), MainView {
@@ -22,17 +23,15 @@ class MainActivity : AppCompatActivity(), MainView {
             setHasFixedSize(true)
             layoutManager = viewManager
         }
-        presenter = MainPresenterImpl(this, MainModelImpl())
+        presenter = MainPresenterImpl(Dispatchers.Main, this, MainModelImpl())
     }
 
     override fun showPlatformName(name: String) {
         title = name
     }
 
-    override fun handleError(ex: Throwable?) {
-        ex?.printStackTrace()
-        val msg : String = ex?.message ?: "Unknown error"
-        Toast.makeText(this, msg, Toast.LENGTH_LONG)
+    override fun showError(error: String) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG)
             .show()
     }
 
