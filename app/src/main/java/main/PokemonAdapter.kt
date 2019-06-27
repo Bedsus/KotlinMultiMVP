@@ -24,6 +24,7 @@ class PokemonAdapter(private val myDataSet: List<PokemonEntry>) : RecyclerView.A
             .load(pokemon.urlImage)
             .centerCrop()
             .resize(300, 300)
+            .placeholder(R.drawable.progress_animation)
             .into(holder.imageView)
     }
 
