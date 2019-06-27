@@ -15,6 +15,7 @@ class MainPresenterImpl(
     }
 
     private fun showPokemonList(){
+        view.showLoading()
         launch {
             try {
                 view.showPokemonList(
@@ -24,6 +25,7 @@ class MainPresenterImpl(
             } catch (ex: Exception) {
                 view.showError(ex.message ?: "Unknown error")
             }
+            view.hideLoading()
         }
     }
 }

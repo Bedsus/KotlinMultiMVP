@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import kotlinx.coroutines.Dispatchers
 import main.data.PokemonEntry
@@ -13,6 +15,7 @@ class MainActivity : AppCompatActivity(), MainView {
     private lateinit var presenter : MainPresenter
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var progressBar: ProgressBar
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity(), MainView {
             setHasFixedSize(true)
             layoutManager = viewManager
         }
+        progressBar = findViewById(R.id.pBar)
         presenter = MainPresenterImpl(Dispatchers.Main, this, MainModelImpl())
     }
 
@@ -37,6 +41,14 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun showPokemonList(pokemons: List<PokemonEntry>) {
         recyclerView.adapter = PokemonAdapter(pokemons)
+    }
+
+    override fun showLoading() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        progressBar.visibility = View.GONE
     }
 
     override fun onDestroy() {

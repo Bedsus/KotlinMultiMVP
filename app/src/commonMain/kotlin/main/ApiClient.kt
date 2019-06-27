@@ -18,9 +18,7 @@ class ApiClient {
 
     private val client = HttpClient {
         install(JsonFeature) {
-            serializer = KotlinxSerializer(Json.nonstrict).apply {
-                setMapper(Pokedex::class, Pokedex.serializer())
-            }
+            serializer = KotlinxSerializer(Json.nonstrict)
         }
     }
 
