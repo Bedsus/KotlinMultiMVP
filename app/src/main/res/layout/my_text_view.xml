@@ -29,7 +29,7 @@
     <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp" app:srcCompat="@android:color/darker_gray"
-            android:id="@+id/imageView" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:id="@+id/pokemonImage" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"/>
 </android.support.constraint.ConstraintLayout>

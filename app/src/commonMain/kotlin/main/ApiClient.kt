@@ -11,6 +11,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.http.takeFrom
 import kotlinx.serialization.json.Json
+import main.data.FlavorTextEntries
 import main.data.Pokedex
 
 
@@ -40,5 +41,10 @@ class ApiClient {
     suspend fun getPokemonList(): Pokedex = client.get {
         val url = "https://pokeapi.co"
         apiUrl(url, "api/v2/pokedex/kanto/")
+    }
+
+    suspend fun getPokemonInfo(id: Int): FlavorTextEntries = client.get {
+        val url = "https://pokeapi.co"
+        apiUrl(url, "api/v2/pokemon-species/$id/")
     }
 }

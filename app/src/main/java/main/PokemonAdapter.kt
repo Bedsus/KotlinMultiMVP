@@ -7,14 +7,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import main.PokemonAdapter.MyViewHolder
 import main.data.PokemonEntry
 
-class PokemonAdapter(private val myDataSet: List<PokemonEntry>) : RecyclerView.Adapter<PokemonAdapter.MyViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder =
-         MyViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.my_text_view, parent, false))
+class PokemonAdapter(
+    private val myDataSet: List<PokemonEntry>,
+    private val mOnClickListener: View.OnClickListener
+) : RecyclerView.Adapter<MyViewHolder>() {
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        val view =  LayoutInflater.from(parent.context)
+            .inflate(R.layout.my_text_view, parent, false)
+        view.setOnClickListener(mOnClickListener)
+        return MyViewHolder(view)
+    }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val pokemon = myDataSet[position]
@@ -33,6 +40,6 @@ class PokemonAdapter(private val myDataSet: List<PokemonEntry>) : RecyclerView.A
     inner class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.textView)
         val number: TextView = view.findViewById(R.id.number)
-        val imageView: ImageView = view.findViewById(R.id.imageView)
+        val imageView: ImageView = view.findViewById(R.id.pokemonImage)
     }
 }

@@ -1,5 +1,6 @@
 package main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import kotlinx.coroutines.Dispatchers
 import main.data.PokemonEntry
+import main.pokemon_info.PokemonInfoActivity
 
 class MainActivity : AppCompatActivity(), MainView {
 
@@ -40,8 +42,16 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showPokemonList(pokemons: List<PokemonEntry>) {
-        recyclerView.adapter = PokemonAdapter(pokemons)
+        recyclerView.adapter = PokemonAdapter(pokemons, View.OnClickListener {
+            val id = recyclerView.getChildLayoutPosition(it) + 1
+            goToPokemonInfo(id)
+        })
     }
+
+    override fun goToPokemonInfo(id: Int) = startActivity(
+        Intent(this, PokemonInfoActivity::class.java).apply {
+            putExtra("POKEMON_ID_TAG", id)
+        })
 
     override fun showLoading() {
         progressBar.visibility = View.VISIBLE
